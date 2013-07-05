@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+    <head>
+	<title>Mobile Crypto Chat</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<!--    offline
+	<link href="css/jquery.mobile.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile.min.js"></script>
+	-->
+	<link href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+		
+	<link href="css/styles.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="js/sha.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/gibberish-aes.js"></script>
+	
+	
+	<style type="text/css">
+	    .ui-page {
+		
+		background: transparent url('img/bbls.jpg');	
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-attachment: fixed;
+	    }
+	</style>
+    </head>
+    <body>
+	<section data-role="page" id="login" data-theme="a" class="pages">
+    
+	    <header data-role="header" data-theme="a" data-position="fixed" class="header">
+		    <h3><small>i</small>Chat</h3>
+	    </header>
+    
+	    <article data-role="content" id="login_content" class="pages">
+		
+		<input placeholder="MSISDN" type="text" id="msisdn" class="centered"/>
+		<input placeholder="Password" type="password" id="password" class="centered"/>
+		<div data-role="controlgroup" data-type="horizontal" class="centered buttons">
+		    <a href="#login" data-role="button" id="loginButton">Login</a>
+		    <a href="#register" data-role="button" id="registerButton">Register</a>
+		</div>
+		<fieldset data-role="controlgroup" class="smallCheckbox">
+		    <input type="checkbox" name="rememberMe" id="rememberMe"/>
+		    <label for="rememberMe" data-mini="true">Remember me</label>
+		</fieldset>
+	    </article>
+	    <div class="popups" data-position="fixed"></div>
+    
+	</section>
+    
+	<section data-role="page" id="register" data-theme="a" class="pages">
+    
+	    <header data-role="header" data-theme="a" data-position="fixed" class="header">
+		    <h1>Registration</h1>
+		    <a href="#login" class="ui-btn-left" data-icon="arrow-l" data-iconpos="notext" data-direction="reverse">Back</a>
+	    </header>
+    
+	    <article data-role="content">
+		<form>
+		    <input placeholder="Enter Your MSISDN" type="text" id="newMsisdn" class="centered"/>
+		    <input placeholder="Enter Password" type="password" id="newPass" class="centered"/>
+		    <input placeholder="Repeat Password" type="password" id="newPassRepeat" class="centered"/>
+		    <a data-role="button" id="regButton" data-icon="check">Register</a>
+		</form>
+	    </article>
+	    <div class="popups" data-position="fixed"></div>
+    
+	</section>
+       
+	<section data-role="page" id="home" data-theme="c" class="pages">
+	    
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h1><small>i</small>Chat</h1>
+		<a href="index.html#popupLogout" data-role="button" data-icon="arrow-l" data-inline="true" data-rel="dialog" data-transition="pop" class="ui-btn-right">Logout</a>
+		
+		<div data-role="navbar" data-theme="a">
+		    <ul>
+			<li><a href="#" class="onlineLink">Online Users</a></li>
+			<li><a href="#" class="settingsLink">Settings</a></li>
+		    </ul>
+		</div>	
+	    </header>
+	    <article data-role="content" data-scroll="scroller">
+		<span id="homePageContent"></span>
+	    </article>
+	    <div class="popups" data-position="fixed"></div>
+    
+	</section>
+       
+	<section data-role="page" id="online" data-theme="c" class="pages">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h1>Users Online</h1>
+		<a href="index.html#popupLogout" data-role="button" data-icon="arrow-l" data-inline="true" data-rel="dialog" data-transition="pop" class="ui-btn-right">Logout</a>
+		
+		<div data-role="navbar" data-theme="a">
+		<ul>
+		    <li><a href="#" class="onlineLink">Online Users</a></li>
+		    <li><a href="#" class="settingsLink">Settings</a></li>
+		</ul>
+		</div>
+	    </header>
+    
+	    <article data-role="content" data-scroll="scroller">
+		
+		<span id="usersOnlineListView"></span>
+	    </article>
+	    <div class="popups" data-position="fixed"></div>
+    
+	</section>
+	
+	<section data-role="page" id="settings" data-theme="c" class="pages">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h3>Settings</h3>
+		<a href="index.html#popupLogout" data-role="button" data-icon="arrow-l" data-inline="true" data-rel="dialog" data-transition="pop" class="ui-btn-right">Logout</a>
+		
+		<div data-role="navbar" data-theme="a" class="nav-glyphish-example">
+		<ul>
+		    <li><a href="#" class="onlineLink">Online Users</a></li>
+		    <li><a href="#" class="settingsLink">Settings</a></li>
+		</ul>
+		</div>
+	    </header>
+    
+	    <article data-role="content">
+		<input value="Refresh rate (ms)" type="text" class="centeredSettings" data-theme="a" readonly/>
+		<a data-role="button" id="setTimeFromSlider" data-theme="a">Set refresh rate</a>
+		<div id="refreshRateHolder"></div>
+		<div id="sliderHolder"></div>
+	    </article>
+	    <div class="popups" data-position="fixed"></div>
+    
+	</section>
+	
+	<section data-role="page" id="userProfile" data-theme="a" class="pages">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h3>User Profile</h3>
+		<a href="index.html#popupLogout" data-role="button" data-icon="arrow-l" data-inline="true" data-rel="dialog" data-transition="pop" class="ui-btn-right">Logout</a>
+		<a href="#online" data-role="back" class="ui-btn-left" data-icon="arrow-l" data-direction="reverse">Back</a>
+	    </header>
+    
+	    <article data-role="content">
+		<div id="profileData" class="windows_left"></div>
+		<div id="chatInfo" class="windows_left">If you want to chat with this person please enter the secret key and press the "Start chat" button below.</div>
+		
+		<input placeholder="Secret key" type="password" id="secretKey" class="centered"/>
+		<a data-role="button" id="startChat" data-icon="check">Start chat</a>
+	    </article>
+	    <div class="popups" data-position="fixed"></div>
+    
+	</section>
+	
+	<section data-role="page" id="chatScreen" data-theme="a" class="pages">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h3>Chat chat...</h3>
+		
+		<a href="index.html#cancelChat" data-role="button" data-icon="arrow-l" data-inline="true" data-rel="dialog" data-transition="pop" class="ui-btn-left">Cancel</a>
+		<a href="#" data-role="button" class="ui-btn-right" id="sendMessage">Send</a>
+	    </header>
+    
+	    <article data-role="content">
+		<div id="chatWindow"></div>
+		<input type="text" id="chatField" data-position="fixed"/>
+	    </article>
+	    <div class="popups" data-position="fixed"></div>
+    
+	</section>
+	
+	<section data-role="page" id="enterSecret" data-theme="a">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h3>Get chatty</h3>
+	    </header>
+    
+	    <article data-role="content">
+		<p>You must enter the secret key in order to start the chat.<p>
+		<input placeholder="Secret key" type="password" id="secretKeyInPopup" class="centered"/>
+		<a href="#" data-role="button" id="startChatPopup" data-icon="check">Start chat</a>
+	    </article>
+    
+	</section>
+	
+	<section data-role="page" id="declinePopup" data-theme="a">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h3>Decline chat?</h3>
+	    </header>
+    
+	    <article data-role="content">
+		<p>Are you sure you want to close this chat.<p>
+		<a href="#" data-role="button" id="declineChatPopup" data-inline="true" class="lonelyButton">Decline</a>
+	    </article>
+    
+	</section>
+	
+	<section data-role="page" id="cancelChat" data-theme="a">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h3>Cancel chat?</h3>
+	    </header>
+    
+	    <article data-role="content">
+		<p>Are you sure you want to close this chat.<p> 
+		<a href="#" data-role="button" id="cancelChatPopup" data-inline="true" class="lonelyButton">Yes</a>
+	    </article>
+    
+	</section>
+	
+	<section data-role="page" id="popupLogout" data-theme="a">
+	    <header data-role="header" data-theme="a" class="header" data-position="fixed">
+		<h3>Logout?</h3>
+	    </header>
+    
+	    <article data-role="content">
+		<p>Are you sure you want to logout.<p> 
+		<a href="#" data-role="button" id="logoutButton" data-inline="true" class="lonelyButton">Yes</a>
+	    </article>
+    
+	</section>
+    </body>
+</html>
